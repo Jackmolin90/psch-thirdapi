@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="psch.thirdapi.mapper.PunishedMapper">   
+
+    <select id="getPageList" resultType="psch.thirdapi.pojo.Punished">
+        select  * from punished a
+        <where>
+            <if test="queryForm.address!=null and queryForm.address!=''">
+                and a.address=#{queryForm.address}
+            </if>
+            <if test="queryForm.blockNumber!=null and queryForm.blockNumber!=''">
+                and a.blocknumber=#{queryForm.blockNumber}
+            </if>
+        </where>
+        ORDER BY a.timestamp DESC limit #{queryForm.current}, #{queryForm.size}
+    </select>
+
+    <select id="getTotal" resultType="java.lang.Long">
+       select count(*) from punished a
+        <where>
+            <if test="queryForm.address!=null and queryForm.address!=''">
+                  and a.address=#{queryForm.address}
+            </if>
+            <if test="queryForm.blockNumber!=null and queryForm.blockNumber!=''">
+                and a.blocknumber=#{queryForm.blockNumber}
+            </if>
+        </where>
+    </select>
+
+</mapper>
